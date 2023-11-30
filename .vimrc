@@ -65,12 +65,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'preservim/nerdtree'
 call plug#end()
 
-" Open NERDTree on Vim startup
-autocmd VimEnter * NERDTree
 
-" Close NERDTree when opening files
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Settings for NERDTree
-map <C-n> :NERDTreeToggle<CR>
+" if vim argc == 0 - open side bar
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+" ctrl + b open side bar
+map <C-b> :NERDTreeToggle<CR>
+" short cut to close vim
+nnoremap qq :q<CR>
+" short cut to save vim file
+inoremap <C-s> <Esc>:w<CR>
 
